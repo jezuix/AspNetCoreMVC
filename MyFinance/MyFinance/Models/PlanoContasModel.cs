@@ -6,43 +6,43 @@ using System.Data;
 
 namespace MyFinance.Models
 {
-    public class ContaModel
+    public class PlanoContaModel
     {
         public int Id { get; set; }
-        [Required(ErrorMessage = "Informe o nome da conta!")]
-        public string Nome { get; set; }
-        [Required(ErrorMessage = "Informe o saldo da conta!")]
-        public string Saldo { get; set; }
+        [Required(ErrorMessage = "Informe a descrição!")]
+        public string Descricao { get; set; }
+        [Required(ErrorMessage = "Informe o tipo!")]
+        public string Tipo { get; set; }
         public int Usuario_Id { get; set; }
         public IHttpContextAccessor _httpContextAccessor { get; set; }
 
-        public ContaModel()
+        public PlanoContaModel()
         {
-
+            Tipo = "D";
         }
 
-        public ContaModel(IHttpContextAccessor httpContextAcessor)
+        public PlanoContaModel(IHttpContextAccessor httpContextAcessor)
         {
             _httpContextAccessor = httpContextAcessor;
         }
 
-        public List<ContaModel> ListaConta()
+        public List<PlanoContaModel> ListaPlanoConta()
         {
-            List<ContaModel> lista = new List<ContaModel>();
-            ContaModel item;
+            List<PlanoContaModel> lista = new List<PlanoContaModel>();
+            PlanoContaModel item;
 
             string id_usuario_id = _httpContextAccessor.HttpContext.Session.GetString("IdUsuarioLogado");
-            string sql = $"SELECT ID, NOME, SALDO, USUARIO_ID FROM CONTA WHERE USUARIO_ID = {id_usuario_id}";
+            string sql = $"SELECT ID, DESCRICAO, TIPO, USUARIO_ID FROM PLANO_CONTAS WHERE USUARIO_ID = {id_usuario_id}";
             DAL objDAL = new DAL();
             DataTable dt = objDAL.RetDataTable(sql);
 
             foreach (DataRow row in dt.Rows)
             {
-                item = new ContaModel()
+                item = new PlanoContaModel()
                 {
                     Id = int.Parse(row["ID"].ToString()),
-                    Nome = row["NOME"].ToString(),
-                    Saldo = row["SALDO"].ToString(),
+                    Descricao = row["DESCRICAO"].ToString(),
+                    Tipo = row["TIPO"].ToString(),
                     Usuario_Id = int.Parse(row["USUARIO_ID"].ToString())
                 };
                 lista.Add(item);
@@ -51,22 +51,22 @@ namespace MyFinance.Models
             return lista;
         }
 
-        public ContaModel CarregaRegistro(int Id)
+        public PlanoContaModel CarregaRegistro(int Id)
         {
-            ContaModel item = new ContaModel();
+            PlanoContaModel item = new PlanoContaModel();
 
             string id_usuario_id = _httpContextAccessor.HttpContext.Session.GetString("IdUsuarioLogado");
-            string sql = $"SELECT ID, NOME, SALDO, USUARIO_ID FROM CONTA WHERE USUARIO_ID = {id_usuario_id} AND ID = {Id}";
+            string sql = $"SELECT ID, DESCRICAO, TIPO, USUARIO_ID FROM PLANO_CONTAS WHERE USUARIO_ID = {id_usuario_id} AND ID = {Id}";
             DAL objDAL = new DAL();
             DataTable dt = objDAL.RetDataTable(sql);
 
             foreach (DataRow row in dt.Rows)
             {
-                item = new ContaModel()
+                item = new PlanoContaModel()
                 {
                     Id = int.Parse(row["ID"].ToString()),
-                    Nome = row["NOME"].ToString(),
-                    Saldo = row["SALDO"].ToString(),
+                    Descricao = row["DESCRICAO"].ToString(),
+                    Tipo = row["TIPO"].ToString(),
                     Usuario_Id = int.Parse(row["USUARIO_ID"].ToString())
                 };
                 break;
@@ -78,7 +78,7 @@ namespace MyFinance.Models
         public void Insert()
         {
             string id_usuario_id = _httpContextAccessor.HttpContext.Session.GetString("IdUsuarioLogado");
-            var sql = $"INSERT INTO CONTA (NOME, SALDO, Usuario_ID) VALUES ('{Nome}', {Saldo}, {id_usuario_id});";
+            var sql = $"INSERT INTO PLANO_CONTAS (DESCRICAO, TIPO, Usuario_ID) VALUES ('{Descricao}', '{Tipo}', {id_usuario_id});";
             DAL objDAL = new DAL();
             objDAL.ExecutarComandosSQL(sql);
         }
@@ -86,15 +86,14 @@ namespace MyFinance.Models
         public void Update()
         {
             string id_usuario_id = _httpContextAccessor.HttpContext.Session.GetString("IdUsuarioLogado");
-            var saldoFormatado = Saldo.Replace(".", string.Empty).Replace(",", ".");
-            var sql = $"UPDATE CONTA SET NOME = '{Nome}', SALDO = {saldoFormatado} WHERE USUARIO_ID = {id_usuario_id} AND ID = {Id};";
+            var sql = $"UPDATE PLANO_CONTAS SET DESCRICAO = '{Descricao}', TIPO = '{Tipo}' WHERE USUARIO_ID = {id_usuario_id} AND ID = {Id};";
             DAL objDAL = new DAL();
             objDAL.ExecutarComandosSQL(sql);
         }
 
         public void Excluir()
         {
-            var sql = $"DELETE FROM CONTA WHERE Id = {Id};";
+            var sql = $"DELETE FROM PLANO_CONTAS WHERE Id = {Id};";
             DAL objDAL = new DAL();
             objDAL.ExecutarComandosSQL(sql);
         }

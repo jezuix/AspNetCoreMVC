@@ -1,7 +1,33 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+<h3>Meus Planos de Contas</h3>
 
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>#</th>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Saldo</th>
+        </tr>
+    </thead>
+    @{
+        foreach (var item in (List<PlanoContaModel>)ViewBag.ListaConta)
+        {
+            <tbody>
+                <tr>
+                    <td><button type="button" class="btn btn-primary" onclick="@("window.location.href='" + @Url.Action("CriarPlanoConta", "PlanoConta", new {id = item.Id }) + "'");">Editar</button></td>
+                    <td><button type="button" class="btn btn-danger" onclick="@("window.location.href='" + @Url.Action("Excluir", "PlanoConta", new {id = item.Id }) + "'");">Excluir</button></td>
+                    <td>@item.Id.ToString()</td>
+                    <td>@item.Descricao.ToString()</td>
+                    <td>@item.Tipo.ToString().Replace("R", "Receita").Replace("D", "Despesa")</td>
+                </tr>
+            </tbody>
+        }
+    }
+</table>
+
+<button type="button" class="btn btn-block btn-primary" onclick="@("window.location.href='" + @Url.Action("CriarPlanoConta", "PlanoConta") + "'");">Criar Plano de Contas</button>

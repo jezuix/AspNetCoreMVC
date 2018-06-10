@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MyFinance.Models;
 
@@ -24,6 +20,7 @@ namespace MyFinance.Controllers
             bool login = usuario.ValidarLogin();
             if (login)
             {
+                HttpContext.Session.SetString("IdUsuarioLogado", usuario.Id.ToString());
                 HttpContext.Session.SetString("NomeUsuarioLogado", usuario.Nome);
                 return RedirectToAction("Menu", "Home");
             }

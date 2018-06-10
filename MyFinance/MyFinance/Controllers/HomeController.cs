@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MyFinance.Models;
 
@@ -10,9 +7,19 @@ namespace MyFinance.Controllers
 {
     public class HomeController : Controller
     {
+        IHttpContextAccessor _httpContextAcessor;
+        public HomeController(IHttpContextAccessor httpContextAcessor)
+        {
+            _httpContextAcessor = httpContextAcessor;
+        }
+
         public IActionResult Index()
         {
-            ViewData["Nome"] = new HomeModel().LerNomeUsuario();
+            string id_usuario_id = _httpContextAcessor.HttpContext.Session.GetString("IdUsuarioLogado");
+
+            if (!string.IsNullOrEmpty(id_usuario_id))
+                return RedirectToAction("Menu", "Home");
+
             return View();
         }
 

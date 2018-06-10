@@ -8,6 +8,7 @@
     <thead>
         <tr>
             <th>#</th>
+            <th>#</th>
             <th>ID</th>
             <th>Nome</th>
             <th>Saldo</th>
@@ -18,12 +19,15 @@
         {
             <tbody>
                 <tr>
-                    <td><button type="button" class="btn btn-danger">Excluir</button></td>
+                    <td><button type="button" class="btn btn-primary" onclick="@("window.location.href='" + @Url.Action("CriarConta", "Conta", new {id = item.Id }) + "'");">Editar</button></td>
+                    <td><button type="button" class="btn btn-danger" onclick="@("window.location.href='" + @Url.Action("Excluir", "Conta", new {id = item.Id }) + "'");">Excluir</button></td>
                     <td>@item.Id.ToString()</td>
                     <td>@item.Nome.ToString()</td>
-                    <td>@item.Saldo.ToString()</td>
+                    <td>R$@double.Parse(item.Saldo).ToString("#,##0.00")</td>
                 </tr>
             </tbody>
         }
     }
 </table>
+
+<button type="button" class="btn btn-block btn-primary" onclick="@("window.location.href='" + @Url.Action("CriarConta", "Conta") + "'");">Criar Conta</button>
