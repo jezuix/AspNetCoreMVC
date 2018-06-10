@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewData["Title"] = "Menu";
+}
+
+<div class="row">
+    <a asp-action="Index" asp-controller="Conta">
+        <div class="col-lg-4">
+            <img src="~/images/conta.png" width="40%" />
+            <h3>Criar Conta</h3>
+        </div>
+    </a>
+    <a asp-action="Index" asp-controller="PlanoConta">
+        <div class="col-lg-4">
+            <img src="~/images/planocontas.png" width="40%" />
+            <h3>Plano de Contas</h3>
+        </div>
+    </a>
+    <a asp-action="Index" asp-controller="Transacao">
+        <div class="col-lg-4">
+            <img src="~/images/registrar_transacao.png" width="40%" />
+            <h3>Registrar Transação</h3>
+        </div>
+    </a>
+    <br /><br /><br />
+    <a asp-action="Extrato" asp-controller="Transacao">
+        <div class="col-lg-4">
+            <img src="~/images/extrato.png" width="40%" />
+            <h3>Extrato</h3>
+        </div>
+    </a>
+    <a asp-action="Dashboard" asp-controller="Transacao">
+        <div class="col-lg-4">
+            <img src="~/images/dashboard.png" width="40%" />
+            <h3>Dashboard</h3>
+        </div>
+    </a>
+    <a asp-action="Ajuda" asp-controller="Home">
+        <div class="col-lg-4">
+            <img src="~/images/ajuda.png" width="40%" />
+            <h3>Ajuda</h3>
+        </div>
+    </a>
+</div>

@@ -1,0 +1,10 @@
+﻿<div class-="row">
+    <div class="col-lg-6">
+        <button type="button" class="btn btn-block btn-primary" onclick="@("window.location.href='" + @Url.Action("Login", "Usuario") + "'");">Entrar no Sistema</button>
+    </div>
+    <div class="col-lg-6">
+        <button type="button" class="btn btn-block btn-success"onclick="@("window.location.href='" + @Url.Action("Registrar", "Usuario") + "'");">Registrar uma Conta</button>
+    </div>
+</div>
+
+@TempData["NomeUsuarioLogado"]
