@@ -1,0 +1,63 @@
+﻿@model TransacaoModel
+
+@{
+    ViewData["Title"] = "CriarTransacao";
+}
+
+<h3>Criar Plano de Contas</h3>
+
+<form asp-controller="Transacao" asp-action="Registrar" method="post">
+    <div class="form-group">
+        <label for="dtTransacao">Data da Transação:</label>
+        <input type="date" class="form-control" asp-for="Data" />
+        <span asp-validation-for="Data" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label>Tipo:</label>
+        <div class="radio">
+            <label>
+                @Html.RadioButtonFor(model => model.Tipo, "R", new { value = "R" })
+                Receita
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                @Html.RadioButtonFor(model => model.Tipo, "D", new { value = "D", })
+                Despesa
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Valor:</label>
+        <input type="text" class="form-control" asp-for="Valor" />
+        <span asp-validation-for="Valor" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label>Histórico:</label>
+        <textarea rows="5" class="form-control" asp-for="Descricao"></textarea>
+        <span asp-validation-for="Descricao" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label>Contas:</label>
+        <select asp-for="Conta_Id" class="form-control">
+            @{
+                foreach (var item in (List<ContaModel>)ViewBag.ListaContas)
+                {
+                    <option value="@item.Id.ToString()">@item.Nome.ToString()</option>
+                }
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Plano de Contas:</label>
+        <select asp-for="Plano_Contas_Id" class="form-control">
+            @{
+                foreach (var item in (List<PlanoContaModel>)ViewBag.ListaPlanoContas)
+                {
+                    <option value="@item.Id.ToString()">@item.Descricao.ToString()</option>
+                }
+            }
+        </select>
+    </div>
+    <button type="submit" class="btn btn-block btn-success">Registrar</button>
+</form>

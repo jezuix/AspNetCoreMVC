@@ -50,7 +50,7 @@ namespace MyFinance.Controllers
         public IActionResult Excluir(int id)
         {
             var conta = new ContaModel(_httpContextAcessor);
-            conta.Excluir();
+            conta.Excluir(id);
             return RedirectToAction("CriarConta","Conta");
         }
     }

@@ -17,35 +17,17 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
+
+    <style>
+        body {
+            background-image: url('../../images/bg.jpg');
+            background-repeat: no-repeat;
+        }
+    </style>
 </head>
-<body onload="carregarUsuarioLogado()">
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a asp-area="" asp-controller="Home" asp-action="Menu" class="navbar-brand">MyFinance</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                </ul>
-                <div id="nomeUsuarioLogado"></div>
-            </div>
-        </div>
-    </nav>
-    <div class="container body-content" style="padding-top:25px;">
+<body>
+    <div class="container body-content" style="padding-top:200px;">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; 2018 - MyFinance</p>
-        </footer>
     </div>
 
     <environment include="Development">
@@ -70,19 +52,5 @@
     </environment>
 
     @RenderSection("Scripts", required: false)
-
-    <script>
-        function carregarUsuarioLogado() {
-            var nome = '@HttpContextAccessor.HttpContext.Session.GetString("NomeUsuarioLogado")';
-            if (nome != '') {
-                var $divNome = document.getElementById("nomeUsuarioLogado");
-                $divNome.innerHTML = "Olá " + nome + "<a href='@Url.Action("Login", "Usuario", new { id = 0})';'> (Sair) </a>";
-                $divNome.style = "color:#fff; text-align: right; heigth: 50px; padding-top: 13px";
-            }
-            else {
-                window.location.href = '@Url.Action("Login", "Usuario")'
-            }
-        }
-    </script>
 </body>
 </html>

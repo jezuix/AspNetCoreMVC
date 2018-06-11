@@ -1,7 +1,41 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+<h3>Minhas Transações</h3>
 
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>#</th>
+            <th>ID</th>
+            <th>Data</th>
+            <th>Tipo</th>
+            <th>Valor</th>
+            <th>Histórico</th>
+            <th>Conta</th>
+            <th>Plano de Contas</th>
+        </tr>
+    </thead>
+    @{
+        foreach (var item in (List<TransacaoModel>)ViewBag.ListaConta)
+        {
+            <tbody>
+                <tr>
+                    <td><button type="button" class="btn btn-primary" onclick="@("window.location.href='" + @Url.Action("Registrar", "Transacao", new {id = item.Id }) + "'");">Editar</button></td>
+                    <td><button type="button" class="btn btn-danger" onclick="@("window.location.href='" + @Url.Action("Excluir", "Transacao", new {id = item.Id }) + "'");">Excluir</button></td>
+                    <td>@item.Id.ToString()</td>
+                    <td>@item.Data.ToString()</td>
+                    <td>@item.Tipo.ToString().Replace("R", "Receita").Replace("D", "Despesa")</td>
+                    <td>R$@double.Parse(item.Valor.ToString()).ToString("#,##0.00")</td>
+                    <td>@item.Descricao.ToString()</td>
+                    <td>@item.NomeConta.ToString()</td>
+                    <td>@item.DescricaoPlanoConta.ToString()</td>
+                </tr>
+            </tbody>
+        }
+    }
+</table>
+
+<button type="button" class="btn btn-block btn-primary" onclick="@("window.location.href='" + @Url.Action("Registrar", "Transacao") + "'");">Registrar Transação</button>

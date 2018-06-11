@@ -53,8 +53,8 @@ namespace MyFinance.Controllers
         [HttpGet]
         public IActionResult Excluir(int id)
         {
-            var conta = new ContaModel(_httpContextAcessor);
-            conta.Excluir();
+            var conta = new PlanoContaModel(_httpContextAcessor);
+            conta.Excluir(id);
             return RedirectToAction("CriarConta", "Conta");
         }
     }

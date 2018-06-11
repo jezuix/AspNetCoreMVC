@@ -92,9 +92,9 @@ namespace MyFinance.Models
             objDAL.ExecutarComandosSQL(sql);
         }
 
-        public void Excluir()
+        public void Excluir(int id)
         {
-            var sql = $"DELETE FROM CONTA WHERE Id = {Id};";
+            var sql = $"DELETE FROM CONTA WHERE Id = {id};";
             DAL objDAL = new DAL();
             objDAL.ExecutarComandosSQL(sql);
         }

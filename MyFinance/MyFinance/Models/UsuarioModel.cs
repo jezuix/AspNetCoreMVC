@@ -11,13 +11,13 @@ namespace MyFinance.Models
     public class UsuarioModel
     {
         public int Id { get; set; }
-        [Required(ErrorMessage = "Informe seu Nome!")]
+        [Required(ErrorMessage = "Informe seu nome!")]
         public string Nome { get; set; }
-        [Required(ErrorMessage = "Informe seu Email!")]
+        [Required(ErrorMessage = "Informe seu rmail!")]
         public string Email { get; set; }
-        [Required(ErrorMessage = "Informe sua Senha!")]
+        [Required(ErrorMessage = "Informe sua senha!")]
         public string Senha { get; set; }
-        [Required(ErrorMessage = "Informe sua Data de Nascimento!")]
+        [Required(ErrorMessage = "Informe sua data de nascimento!")]
         public string Data_Nascimento { get; set; }
 
         public bool ValidarLogin()
