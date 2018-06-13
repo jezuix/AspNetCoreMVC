@@ -18,7 +18,7 @@
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
 </head>
-<body onload="carregarUsuarioLogado()">
+<body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -32,7 +32,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Menu</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                 </ul>
@@ -72,6 +72,9 @@
     @RenderSection("Scripts", required: false)
 
     <script>
+        window.addEventListener('load', carregarUsuarioLogado);
+        //document.querySelector("body").addEventListener("load", carregarUsuarioLogado);
+
         function carregarUsuarioLogado() {
             var nome = '@HttpContextAccessor.HttpContext.Session.GetString("NomeUsuarioLogado")';
             if (nome != '') {

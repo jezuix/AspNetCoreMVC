@@ -1,2 +1,7 @@
-﻿<h2>Parabéns sua conta foi criada com sucesso! Clique <a href='@Url.Action("Login", "Usuario", new { id = 0})' ;'> aqui </a>para efetuar login no sistema!</h2>
+﻿@{
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
 
+<div class="alert-success">
+    <h2>Parabéns sua conta foi criada com sucesso! Clique <a href='@Url.Action("Login", "Usuario", new { id = 0})' ;'> aqui </a>para efetuar login no sistema!</h2>
+</div>

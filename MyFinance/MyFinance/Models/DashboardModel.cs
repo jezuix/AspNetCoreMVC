@@ -12,15 +12,16 @@ namespace MyFinance.Models
         public double Total { get; set; }
         public string PlanoConta { get; set; }
 
-        public List<DashboardModel> RetornarDadosGraficoPie()
+        public List<DashboardModel> RetornarDadosGraficoPie(string usuario_ID)
         {
             List<DashboardModel> lista = new List<DashboardModel>();
 
             var sql = $"SELECT SUM(T.VALOR) AS TOTAL, PC.DESCRICAO " +
-                        " FROM TRANSACAO T INNER JOIN " +
-                        "     PLANO_CONTAS PC ON T.PLANO_CONTAS_ID = PC.ID " +
-                        " WHERE T.TIPO = 'D' " +
-                        " GROUP BY PC.DESCRICAO; ";
+                       " FROM TRANSACAO T INNER JOIN " +
+                       "     PLANO_CONTAS PC ON T.PLANO_CONTAS_ID = PC.ID " +
+                       " WHERE T.TIPO = 'D' AND " +
+                      $"     PC.USUARIO_ID = {usuario_ID} " +
+                       " GROUP BY PC.DESCRICAO; ";
 
             DAL objDAL = new DAL();
             DataTable dt = objDAL.RetDataTable(sql);

@@ -10,14 +10,14 @@ namespace MyFinance.Controllers
 {
     public class TransacaoController : Controller
     {
-        IHttpContextAccessor _httpContextAcessor;
+        IHttpContextAccessor _httpContextAccessor;
         public TransacaoController(IHttpContextAccessor httpContextAcessor)
         {
-            _httpContextAcessor = httpContextAcessor;
+            _httpContextAccessor = httpContextAcessor;
         }
         public IActionResult Index()
         {
-            TransacaoModel objTransacao = new TransacaoModel(_httpContextAcessor);
+            TransacaoModel objTransacao = new TransacaoModel(_httpContextAccessor);
             ViewBag.ListaConta = objTransacao.ListaTransacao();
 
             return View();
@@ -27,12 +27,12 @@ namespace MyFinance.Controllers
         public IActionResult Registrar(int? id)
         {
             var transacao = new TransacaoModel();
-            ViewBag.ListaContas = new ContaModel(_httpContextAcessor).ListaConta();
-            ViewBag.ListaPlanoContas = new PlanoContaModel(_httpContextAcessor).ListaPlanoConta();
+            ViewBag.ListaContas = new ContaModel(_httpContextAccessor).ListaConta();
+            ViewBag.ListaPlanoContas = new PlanoContaModel(_httpContextAccessor).ListaPlanoConta();
 
             if (id != null)
             {
-                transacao._httpContextAccessor = _httpContextAcessor;
+                transacao._httpContextAccessor = _httpContextAccessor;
                 return View(transacao.CarregaRegistro(id ?? 0));
             }
             return View(transacao);
@@ -43,22 +43,22 @@ namespace MyFinance.Controllers
         {
             if (ModelState.IsValid)
             {
-                transacao._httpContextAccessor = _httpContextAcessor;
+                transacao._httpContextAccessor = _httpContextAccessor;
                 if (transacao.Id == 0)
                     transacao.Insert();
                 else
                     transacao.Update();
                 return RedirectToAction("Index", "Transacao");
             }
-            ViewBag.ListaContas = new ContaModel(_httpContextAcessor).ListaConta();
-            ViewBag.ListaPlanoContas = new PlanoContaModel(_httpContextAcessor).ListaPlanoConta();
+            ViewBag.ListaContas = new ContaModel(_httpContextAccessor).ListaConta();
+            ViewBag.ListaPlanoContas = new PlanoContaModel(_httpContextAccessor).ListaPlanoConta();
             return View();
         }
 
         [HttpGet]
         public IActionResult Excluir(int id)
         {
-            var transacao = new TransacaoModel(_httpContextAcessor);
+            var transacao = new TransacaoModel(_httpContextAccessor);
             transacao.Excluir(id);
             return RedirectToAction("Index", "Transacao");
         }
@@ -71,24 +71,25 @@ namespace MyFinance.Controllers
                 Tipo = null
             };
 
-            transacao._httpContextAccessor = _httpContextAcessor;
+            transacao._httpContextAccessor = _httpContextAccessor;
             ViewBag.ListaTransacao = transacao.ListaTransacao();
-            ViewBag.ListaContas = new ContaModel(_httpContextAcessor).ListaConta();
+            ViewBag.ListaContas = new ContaModel(_httpContextAccessor).ListaConta();
             return View(transacao);
         }
 
         [HttpPost]
         public IActionResult Extrato(TransacaoModel transacao)
         {
-            transacao._httpContextAccessor = _httpContextAcessor;
+            transacao._httpContextAccessor = _httpContextAccessor;
             ViewBag.ListaTransacao = transacao.ListaTransacao();
-            ViewBag.ListaContas = new ContaModel(_httpContextAcessor).ListaConta();
+            ViewBag.ListaContas = new ContaModel(_httpContextAccessor).ListaConta();
             return View();
         }
 
         public IActionResult Dashboard()
         {
-            var lista = new DashboardModel().RetornarDadosGraficoPie();
+            string id_usuario_id = _httpContextAccessor.HttpContext.Session.GetString("IdUsuarioLogado");
+            var lista = new DashboardModel().RetornarDadosGraficoPie(id_usuario_id);
 
             var valores = string.Empty;
             var labels = string.Empty;
@@ -100,9 +101,9 @@ namespace MyFinance.Controllers
                 cores += "'" + String.Format("#{0:X6}", new Random().Next(0x1000000)) + "',";
             }
 
-            ViewBag.Valores = valores.Substring(0, valores.Length - 1);
-            ViewBag.Labels = labels.Substring(0, labels.Length - 1);
-            ViewBag.Cores = cores.Substring(0, cores.Length - 1);
+            ViewBag.Valores = valores;
+            ViewBag.Labels = labels;
+            ViewBag.Cores = cores;
             return View();
         }
     }

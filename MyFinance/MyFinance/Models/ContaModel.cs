@@ -21,9 +21,9 @@ namespace MyFinance.Models
 
         }
 
-        public ContaModel(IHttpContextAccessor httpContextAcessor)
+        public ContaModel(IHttpContextAccessor httpContextAccessor)
         {
-            _httpContextAccessor = httpContextAcessor;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public List<ContaModel> ListaConta()
